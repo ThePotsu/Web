@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Hachan | Doujin</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/doujin-page.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div id="content">
+        <div id="doujin"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+
+    <script type="module">
+        import RenderDoujin         from "./Web/scripts/RenderDoujin.js";
+        import CDN                  from "./Scripts/@CDN.js";
+        const ImageDatas            = await CDN.AllGalleries();
+        
+
+        const params    = new URLSearchParams(window.location.search);
+        const Doujin_Id = params.get("d");
+
+        const Doujin    = ImageDatas.find(d => d.id === Doujin_Id);
+        const Pages     = Doujin.pages;
+
+
+        document.querySelector("div#content div#doujin").innerHTML = `
+            <div id="data">
+                <div id="left">
+                    <img onclick="null;document.location='./view.html?v=${Doujin_Id}'" src="${CDN.ImageURL(Doujin, 1)}" class="doujin-image">
+                </div>
+                
+                <div id="right">
+                    <div id="top">
+                        <h1 class="doujin-title">${Doujin.title}</h1>
+                        
+                        ${
+                            localStorage.getItem(`last-read-${Doujin_Id}`) ?
+                                `<h1 id="last-read">Continue reading at page ${JSON.parse(localStorage.getItem(`last-read-${Doujin_Id}`)).page}</h1>` 
+                                : 
+                                ""
+                        }
+
+                        <div id="doujin-data">
+                            <!-- <div class="g_flag ${Doujin.country} doujin-language"></div> -->
+                            <h1 class="doujin-pages">${Doujin.pages} Pages</h1>
+                            <h1 class="doujin-category">${Doujin.category}</h1>
+                        </div>
+                    </div>
+
+                    <div id="bot">
+                        <div id="tags-ctn">
+                            ${
+                                Group_Tags(Doujin.tags)
+                                    .reverse()
+                                    .map((tag, i) => {
+                                        const { category:Tag_Category, tags:Tags } = tag;
+
+                                        return (
+                                            `
+                                                <div class="${i === 0 ? "tag-1" : ""} tag-content" id="${Tag_Category}">
+                                                    <div class="label-ctn">
+                                                        <h1 class="tag-category">${Tag_Category}</h1>
+                                                    </div>
+
+                                                    <div class="inner-tags-ctn">
+                                                        ${
+                                                            Tags
+                                                                .filter((_, i) => i <= 10)
+                                                                .map(Tag_Value => `<a class="tag-content" href="./search.html?tag=${Tag_Value}">${Tag_Value}</a>`)
+                                                                .join("\n")
+                                                        }
+                                                    </div>
+                                                </div>
+                                            `
+                                        )
+                                    })
+                                    .join("\n")
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pages-preview"></div>
+        `
+        
+        for (let page = 0 ; page < Pages ; page++) {
+            const image_el          = document.createElement("img");
+            const image_extension   = ImageDatas.find(d => d.id === Doujin_Id).special_formats.find(
+                ({ page:current_page }) => current_page === (page + 1)
+            )?.format || "jpg";
+
+            image_el.classList.add("doujin-image");
+
+            image_el.loading = "lazy";
+            image_el.id = `img-${page + 1}`;
+            image_el.src = CDN.ImageURL(Doujin, page + 1);
+            image_el.onclick = (event) => {
+                document.location = `./view.html?v=${Doujin_Id}`;
+            }
+            
+            document.body.appendChild(image_el);
+            document.querySelector("div#content div#doujin div#pages-preview").appendChild(image_el);
+        }
+
+        function Group_Tags (Tags) {
+            const Grouped_Tags = [];
+
+            for (const Tag of Tags) {
+                const { category, tag } = Tag;
+
+                if (!Grouped_Tags.find(tag => tag.category === category)) {
+                    Grouped_Tags.push({
+                        category,
+                        tags: [ tag ]
+                    });
+                } else {
+                    Grouped_Tags.find(t => t.category === category).tags.push(tag)
+                }
+            }
+
+            return Grouped_Tags
+                .sort((a,b) => {
+                    return b.tags.length - a.tags.length
+                })
+        }
+
+        function Image_Extension (page, gallery_data)
+        {
+            return gallery_data.special_formats
+                .find(({ page:current_page }) => current_page === (page))?.format || "jpg";
+        }
+    </script>
+</body>
+</html>

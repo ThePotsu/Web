@@ -1,0 +1,304 @@
+div#content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div.btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div.btns .btn svg {
+    height: 40px;
+    width: auto;
+
+    fill: rgb(var(--pink));
+}
+
+div#content div.btns span#pages {
+    background-color: rgb(var(--plain-white));
+    color: rgb(var(--black));
+
+    padding: 3px 10px 3px 10px;
+    border-radius: 20px;
+    
+    font-family: var(--title-font);
+    font-size: 20px;
+    font-weight: bolder;
+
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+div#content > div#doujins {
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+    white-space: nowrap;
+}
+
+div#content > div#doujins::-webkit-scrollbar {
+    width: 0px;
+}
+
+div#content div#doujins div.doujin {
+    width: 100%;
+    height: 100vh;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+div#content div#doujins div.doujin .artworks-display {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+
+    width: 100%;
+    height: 100vh;
+}
+
+div#content div#doujins div.doujin .artworks-display img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(2px);
+}
+
+div#content div#doujins div.doujin .artworks-display img.mobile {
+    display: none;
+}
+
+div#content div#doujins div.doujin div#data {
+    position: absolute;
+
+    left: 10%;
+    right: 10%;
+    top: 10%;
+
+    width: calc(80% - 20px);
+    border-radius: 10px;
+    padding: 10px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    background-color: rgb(var(--black-dense));
+}
+
+div#content div#doujins div.doujin div#data div#left {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 5%;
+}
+
+div#content div#doujins div.doujin div#data div#left img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+div#content div#doujins div.doujin div#data div#right {
+    width: 70%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#doujins div.doujin div#data div#right div#top {
+    width: 100%;
+}
+
+div#content div#doujins div.doujin div#data div#right div#top h1.doujin-title {
+    font-size: 17px;
+    font-family: var(--title-font);
+    font-weight: bold;
+
+    color: rgb(var(--white));
+    white-space: break-spaces;
+}
+
+div#content div#doujins div.doujin div#data div#right div#top div#doujin-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+div#content div#doujins div.doujin div#data div#right div#top div#doujin-data * {
+    font-size: 15px;
+    font-family: var(--button-font);
+    font-weight: lighter;
+
+    color: rgb(var(--plain-white));
+    background-color: rgb(var(--black));
+
+    margin: 0.5%;
+    padding: 2px 10px 2px 10px;
+    border-radius: 20px;
+}
+
+div#content div#doujins div.doujin div#data div#right div#top div#doujin-data .view-btn {
+    background-color: rgb(var(--plain-white));
+    color: rgb(var(--black));
+    font-weight: bolder;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot {
+    width: 100%;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn {
+    margin-top: 2%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn div.tag-content {
+    padding: 10px;
+
+    background-color: rgb(var(--black-denser));
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(100% - 20px);
+    margin: 5px;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn .tag-content div.label-ctn {
+    width: 30%;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn .tag-content div.label-ctn h1.tag-category {
+    color: rgb(var(--white));
+
+    text-align: center;
+
+    font-size: 16px;
+    font-family: monospace;
+    text-transform: capitalize;
+
+    margin: 0px;
+    margin-bottom: 4%;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn .tag-content .inner-tags-ctn {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+    row-gap: 5px;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn .tag-content .inner-tags-ctn a.tag-content {
+    padding: 3px;
+
+    background-color: rgb(var(--black-dense));
+    color: rgb(var(--plain-white));
+
+    border-radius: 5px;
+
+    font-size: 14px;
+    font-family: monospace;
+
+    margin: 0px;
+}
+
+div#content div#doujin div#pages-preview {
+    margin-top: 10%;
+
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+
+    column-gap: 2%;
+    row-gap: 20px;
+
+    padding: 10px;
+    background-color: rgb(var(--black-denser));
+}
+
+div#content div#doujin div#pages-preview img {
+    max-width: 100%;
+
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+
+@media only screen and (max-width: 800px) {
+    div#content > div#doujins {
+        /* overflow-y: scroll; */
+    }
+
+    div#content div#doujins div.doujin div#data {
+        min-height: 140vh;
+    }
+    
+    div#content div#doujins div.doujin .artworks-display img.mobile {
+        display: block;
+    }
+
+    div#content div#doujins div.doujin div#data {
+        top: 0%;
+    }
+
+    div#content div#doujins div.doujin div#data {
+        flex-direction: column;
+    }
+
+    div#content div#doujins div.doujin div#data div#left {
+        width: 40%;
+        margin-right: 0%;
+    }
+
+    div#content div#doujins div.doujin div#data div#right {
+        width: 100%;
+    }
+
+    div#content div#doujins div.doujin div#data div#right div#top h1.doujin-title {
+        font-size: 17px;
+    }
+    
+    div#content div#doujins div.doujin div#data div#right div#top div#doujin-data h1 {
+        font-size: 20px;
+    }
+
+    div#content div#doujins div.doujin div#data div#right div#bot div#tags-ctn .tag-content .inner-tags-ctn a.tag-content {
+        font-size: 18px;
+    }
+
+    div#content div#doujins div.doujin div#data div#right div#top div#doujin-data * {
+        font-size: 17px;
+    }
+}

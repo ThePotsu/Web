@@ -1,0 +1,244 @@
+div#navbar {
+    width: 100%;
+    margin-bottom: 3%;    
+}
+
+div#navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    position: relative;
+}
+
+div#navbar .always-in-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+}
+
+div#navbar .always-in-view svg {
+    height: 70px;
+    width: 70px;
+    z-index: 999999999999999;
+    position: relative;
+}
+
+div#navbar .always-in-view svg path {
+    stroke: rgb(var(--pink));
+}
+
+div#navbar .always-in-view .searchbar-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+}
+
+div#navbar .always-in-view .searchbar-ctn .searchbar {
+    width: 50%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+div#navbar .always-in-view .searchbar-ctn .searchbar input {
+    width: 90%;
+
+    outline: none;
+    border: none;
+
+    background-color: rgb(var(--black-denser));
+    color: rgb(var(--red));
+
+    font-family: var(--title-font);
+    font-size: 20px;
+    font-weight: 300;
+
+    padding: 5px;
+    border-radius: 10px;
+}
+
+div#navbar .always-in-view .searchbar-ctn .searchbar button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+
+    width: 10%;
+    margin-right: 20px;
+}
+
+div#navbar .always-in-view .searchbar-ctn .searchbar button img {
+    background-color: rgb(var(--pink));
+    border-radius: 50%;
+
+    padding: 10px;
+    
+    max-width: 50%;
+}
+
+div#navbar.open {
+    background-color: rgb(var(--black));
+    z-index: 9999999999999999999;
+}
+
+div#navbar div.nav-content div#nav-content.loading-content {
+    display: none;
+}
+
+div#navbar div.nav-content div#nav-content {
+    background-color: rgb(var(--black));
+    position: absolute;
+
+    top: 0px;
+
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-end;
+
+    height: 100vh;
+    padding-right: 20px;
+
+    transition: 1s;
+    border-width: 0px 2px 0px 0px;
+    border-style: solid;
+}
+
+div#navbar div.nav-content div#nav-content:hover {
+    border-color: rgb(var(--pink));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn {
+    margin-top: 75px;
+
+    display: grid;
+    grid-template-columns: auto;
+    row-gap: 10px;
+    
+    width: 100%;
+    padding-left: 20px;
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 10px;
+    transition: 0.5s;
+    border-radius: 15px 0px 0px 15px;
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link:hover {
+    background-color: rgb(var(--pink));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link svg {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link:hover svg.fill {
+    fill: rgb(var(--black));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link:hover svg path {
+    stroke: rgb(var(--black));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link svg.fill {
+    fill: rgb(var(--pink));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link svg path {
+    stroke: rgb(var(--pink));
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link h1 {
+    color: rgb(var(--white-dense));
+
+    margin: 0;
+    font-size: 30px;
+    font-family: var(--button-font);
+    font-weight: 300;
+}
+
+div#navbar div.nav-content div#nav-content #links-ctn a.link:hover h1 {
+    color: rgb(var(--black));
+}
+
+.open-nav {
+    animation-name: Open-Nav;
+    animation-duration: 1s;
+    left: 0%;
+}
+
+.close-nav {
+    animation-name: Close-Nav;
+    animation-duration: 1s;
+    left: -50%;
+    display: none;
+}
+
+@keyframes Open-Nav {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 0%;
+    }
+}
+
+@keyframes Close-Nav {
+    from {
+        left: 0%;
+    }
+
+    to {
+        left: -50%;
+        display: none;
+    }
+}
+
+
+
+@media only screen and (max-width: 800px) {
+    div#navbar .always-in-view .searchbar-ctn .searchbar {
+        width: 70%;
+    }
+
+    div#navbar .always-in-view .searchbar-ctn .searchbar button {
+        width: 30%;
+    }
+    
+    div#navbar .always-in-view .searchbar-ctn .searchbar button img {
+        max-width: 50%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    div#navbar .always-in-view .searchbar-ctn .searchbar {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    div#navbar .always-in-view .searchbar-ctn .searchbar {
+        width: 100%;
+    }
+}

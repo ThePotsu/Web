@@ -1,0 +1,137 @@
+div#content {
+    display: flex;
+    flex-direction: column;
+}
+
+div#content div#buttons-ctn {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+}
+
+div#content div#doujins {
+    margin-top: 2%;
+}
+
+div#content div#buttons-ctn,
+div#content div#doujins {
+    width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    padding: 10px;
+}
+
+div#content div#doujins {
+    display: grid;
+    grid-template-columns: 16% 16% 16% 16% 16% 16%;
+    gap: 20px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#doujins a.doujin {
+    animation-name: Fade-In;
+    animation-duration: 3s;
+}
+
+div#content div#buttons-ctn .content-filter-btn {
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(var(--white-dense));
+
+    background-color: transparent;
+
+    padding: 5px;
+    border-radius: 3px;
+
+    transition: 0.5s;
+}
+
+div#content div#buttons-ctn .content-filter-btn:hover {
+    background-color: rgb(var(--red));
+}
+
+div#content div#buttons-ctn .content-filter-btn h1 {
+    color: rgb(var(--plain-white));
+
+    margin: 0.3%;
+
+    font-size: 20px;
+    font-family: var(--default-font);
+    font-weight: 400;
+}
+
+div#content div#buttons-ctn .content-filter-btn html,
+div#content div#buttons-ctn .content-filter-btn body {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+}
+
+div#content div#buttons-ctn .content-filter-btn svg {
+    fill: rgb(var(--plain-white));
+    height: 30px;
+    width: auto;
+    margin-right: 5px;
+}
+
+div#content div#buttons-ctn .pressed {
+    background-color: rgba(var(--yellow-rgb), 0.3);
+}
+
+@keyframes Fade-In {
+    0%      {
+        opacity: 0;
+        margin-top: 75%;
+    }
+
+    100%    {
+        opacity: 1;
+        margin-top: 0%;
+    }
+}
+
+
+@media only screen and (min-width: 1500px) {
+    div#content div#doujins {
+        grid-template-columns: 16% 16% 16% 16% 16% 16%;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    div#content div#doujins {
+        grid-template-columns: 24% 24% 24% 24%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    div#content div#doujins {
+        grid-template-columns: 24% 24% 24% 24%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    div#content div#doujins {
+        grid-template-columns: 48% 48%;
+    }
+
+    div#content div#buttons-ctn {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 10px;
+    }
+
+    div#content div#buttons-ctn,
+    div#content div#doujins {
+        width: 99%;
+        margin-right: 0%;
+        margin-left: 0%;
+
+        padding: 0px;
+    }
+
+    div#content div#doujins {
+        gap: 2px;
+    }
+}

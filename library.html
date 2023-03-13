@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Hachan | Library</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/library-page.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div id="content">
+        <div id="library"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module">
+        import Libraries            from "../../Data/Library.json" assert { type: "json" };
+        import CDN                  from "./Scripts/@CDN.js";
+        const ImageDatas            = await CDN.AllGalleries();
+
+
+        const params    = new URLSearchParams(window.location.search);
+        const Library    = Libraries.find(lib => lib.series === params.get("s"));
+
+        const Doujins   = ImageDatas.filter(d => Library.doujins.includes(d.id));
+        const Pages     = Doujins.reduce((a,b) => a + b.pages, 0);
+        const Raw_Tags  = Doujins.map(d => d.tags).flat();
+        const Tags      = Raw_Tags.filter((d, i) => {
+            return Raw_Tags.findIndex(tag => tag.category === d.category && tag.tag === d.tag) === i
+        });
+
+
+        const Library_View_Link = `./view.html?v=${Doujins.map(d => d.id).join(",")}`;
+
+
+        document.querySelector("div#content div#library").innerHTML = `
+            <div id="data">
+                <div id="left">
+                    <img onclick="null;document.location='${Library_View_Link}'" src="${CDN.ImageURL(Doujins[0], 1)}" class="library-image">
+                </div>
+
+                <div id="right">
+                    <div id="top">
+                        <h1 class="library-title">${Library.series}</h1>
+
+                        ${
+                            localStorage.getItem(`last-read-${Library.series}`) ?
+                                `<h1 id="last-read">Continue reading at page ${JSON.parse(localStorage.getItem(`last-read-${Library.series}`)).page}</h1>`
+                                :
+                                ""
+                        }
+
+                        <div id="library-data">
+                            <h1 class="library-pages">${Pages} Pages</h1>
+                            <h1 class="library-category">${Doujins[0].category}</h1>
+                        </div>
+                    </div>
+
+                    <div id="bot">
+                        <div id="tags-ctn">
+                            ${
+                                Group_Tags(Tags)
+                                    .reverse()
+                                    .map((tag, i) => {
+                                        const { category:Tag_Category, tags:Tags } = tag;
+
+                                        return (
+                                            `
+                                                <div class="${i === 0 ? "tag-1" : ""} tag-content" id="${Tag_Category}">
+                                                    <div class="label-ctn">
+                                                        <h1 class="tag-category">${Tag_Category}</h1>
+                                                    </div>
+
+                                                    <div class="inner-tags-ctn">
+                                                        ${
+                                                            Tags
+                                                                .filter((_, i) => i <= 10)
+                                                                .map(Tag_Value => `<a class="tag-content" href="./search.html?tag=${Tag_Value}">${Tag_Value}</a>`)
+                                                                .join("\n")
+                                                        }
+                                                    </div>
+                                                </div>
+                                            `
+                                        )
+                                    })
+                                    .join("\n")
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pages-preview"></div>
+        `;
+
+        for (const Doujin of Doujins) {
+            for (let page = 0 ; page < Doujin.pages ; page++) {
+                const image_el          = document.createElement("img");
+                const image_extension   = Doujin.special_formats.find(
+                    ({ page:current_page }) => current_page === (page + 1)
+                )?.format || "jpg";
+
+                image_el.classList.add("doujin-image");
+
+                image_el.loading = "lazy";
+                image_el.id = `img-${page + 1}`;
+                image_el.src = CDN.ImageURL(Doujin, page + 1);
+                image_el.onclick = (event) => {
+                    document.location = Library_View_Link;
+                }
+
+                document.body.appendChild(image_el);
+                document.querySelector("div#content div#library div#pages-preview").appendChild(image_el);
+            }
+        }
+
+
+        function Group_Tags (Tags) {
+            const Grouped_Tags = [];
+
+            for (const Tag of Tags) {
+                const { category, tag } = Tag;
+
+                if (!Grouped_Tags.find(tag => tag.category === category)) {
+                    Grouped_Tags.push({
+                        category,
+                        tags: [ tag ]
+                    });
+                } else {
+                    Grouped_Tags.find(t => t.category === category).tags.push(tag)
+                }
+            }
+
+            return Grouped_Tags
+                .sort((a,b) => {
+                    return b.tags.length - a.tags.length
+                })
+        }
+
+        function Image_Extension (page, gallery_data)
+        {
+            return gallery_data.special_formats
+                .find(({ page:current_page }) => current_page === (page))?.format || "jpg";
+        }
+    </script>
+</body>
+</html>

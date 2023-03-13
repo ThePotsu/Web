@@ -1,0 +1,156 @@
+div#content {
+    width: 95%;
+
+    display: grid;
+    grid-template-columns: 19% 19% 19% 19% 19%;
+    gap: 10px;
+
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+}
+
+div#content div.doujin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+div#content div.doujin div#left {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+div#content div.doujin div#left img {
+    max-width: 100%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+div#content div.doujin div#right {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    background-color: rgb(var(--black-dense));
+    border-radius: 0px 0px 10px 10px;
+}
+
+div#content div.doujin div#right div#top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    align-self: flex-start;
+}
+
+div#content div.doujin div#right div#top div#time {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+div#content div.doujin div#right div#top div#time svg {
+    height: 20px;
+    width: 20px;
+
+    fill: rgb(var(--pink));
+}
+
+div#content div.doujin div#right div#top div#time span {
+    color: rgb(var(--pink));
+
+    font-family: var(--title-font);
+    font-weight: bold;
+    font-size: 15px;
+
+    margin-left: 5px;
+}
+
+div#content div.doujin div#right div#top h1 {
+    color: rgb(var(--plain-white));
+
+    font-family: var(--title-font);
+    font-weight: lighter;
+    font-size: 18px;
+
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+div#content div.doujin div#right div#bot {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+
+    width: calc(100% - 8px);
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+div#content div.doujin div#right div#bot::-webkit-scrollbar {
+    width: 1px;
+    height: 5px;
+}
+
+div#content div.doujin div#right div#bot::-webkit-scrollbar-track {
+    background-color: rgb(var(--black-dense));
+}
+
+div#content div.doujin div#right div#bot::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--pink));
+    border-radius: 20px;
+}
+
+div#content div.doujin div#right div#bot span {
+    display: inline-block;
+    color: rgb(var(--black));
+    background-color: rgb(var(--plain-white));
+    text-transform: capitalize;
+    
+    padding: 5px;
+    border-radius: 20px;
+    margin: 4px;
+
+    font-family: var(--button-font);
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+@media only screen and (max-width: 800px) {
+    div#content {
+        width: 100%;
+    
+        grid-template-columns: 32% 32% 32%;
+        
+        margin-right: 0%;
+        margin-left: 0%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    div#content {
+        width: 100%;
+    
+        grid-template-columns: 48.5% 48.5%;
+        
+        margin-right: 0%;
+        margin-left: 0%;
+    }
+}

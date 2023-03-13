@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Hachan | History</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/history.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div id="content"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+    <script type="module">
+        import CDN                  from "./Scripts/@CDN.js";
+
+        const ImageDatas            = await CDN.AllGalleries();
+        const History               = localStorage.getItem("history");
+
+
+        if (History === null) {
+            document.querySelector("div#content").innerHTML = "<h1>History is empty</h1>"
+        } else {
+            document.querySelector("div#content").innerHTML = `
+            ${
+                JSON.parse(History)
+                    .map(data => {
+                        const { id, time }  = data;
+                        const doujin        = ImageDatas.find(d => d.id === id);
+
+                        return `
+                            <div class="doujin clickable" onclick="document.location.href='./doujin.html?d=${id}'">
+                                <div id="left">
+                                    <img src="${CDN.ImageURL(doujin, 1)}">
+                                </div>
+
+                                <div id="right">
+                                    <div id="top">
+                                        <div id="time">
+                                            <div class="inject-svg" id="clock"></div>
+                                            <span>${new Date(time).toLocaleString()}</span>
+                                        </div>
+                                        <h1>${doujin.title}</h1>
+                                    </div>
+
+                                    <div id="bot">
+                                        ${
+                                            doujin.tags.map(tag => {
+                                                const { tag:name, category } = tag;
+
+                                                return `<span class="tag">${name}</span>`
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    })
+                    .join("\n")
+            }
+            `
+        }
+
+        function Image_Extension (page, gallery_data)
+        {
+            return gallery_data.special_formats
+                .find(({ page:current_page }) => current_page === (page))?.format || "jpg";
+        }
+    </script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+</body>
+</html>

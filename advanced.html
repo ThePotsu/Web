@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Hachan</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/advanced.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div id="content">
+        <h1 id="label">Advanced Search</h1>
+
+        <div class="searchbar-ctn">
+            <input type="text" id="searchbar">
+            <button id="search-btn">
+                <img src="./Web/content/icon/search.svg">
+            </button>
+        </div>
+
+        <div id="selected-search-tags-ctn"></div>
+        <div id="search-tags-ctn"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+
+    <script type="module">
+        import CDN                  from "./Scripts/@CDN.js";
+        const ImageDatas            = await CDN.AllGalleries();
+
+
+        const Grouped_Tags = Group_Tags(
+            ImageDatas
+                .map(Data => Data.tags)
+                .flat()
+        );
+
+
+        for (const Grouped_Tag of Grouped_Tags) {
+            const { category, tags } = Grouped_Tag;
+
+            const InnerHTML__Search_Tags = `
+                <div class="grouped-tags-ctn" id="tag-category-${category}">
+                    <h1 id="grouped-tags-label">${category}</h1>
+
+                    <div id="grouped-tags">
+                        ${
+                            tags
+                                .map((tag, index) => {
+                                    return `
+                                        <h1 class="grouped-tags-tag" id="${category}-${index}">${tag}</h1>
+                                    `
+                                })
+                                .join("")
+                        }
+                    </div>
+                </div>
+            `
+
+            document.querySelector("div#content div#search-tags-ctn").innerHTML += InnerHTML__Search_Tags;
+
+
+            const InnerHTML__Selected_Search_Tags = tags
+                .map((tag, index) => {
+                    return `
+                        <div class="search-tag-btn-ctn hidden-tag" id="tag-${category}-${index}">
+                            <button class="remove-tag-btn">
+                                <img src="./Web/content/icon/cancel.svg" class="remove-tag-img" id="img-tag-${category}-${index}">
+                            </button>
+                            <h1>${tag}</h1>
+                        </div>
+                    `
+                })
+                .join("")
+
+            document.querySelector("div#content div#selected-search-tags-ctn").innerHTML += InnerHTML__Selected_Search_Tags;
+        }
+
+
+        // Auto fill
+        const params = new URLSearchParams(window.location.search);
+        const Auto_Fill_Query   = params.get("fill_q");
+        const Auto_Fill_Tag     = (params.get("fill_t") || "").split(",");
+
+        if (Auto_Fill_Query !== null) {
+            document.querySelector("input#searchbar").value = Auto_Fill_Query;
+        }
+
+        if (Auto_Fill_Tag.length >= 1) {
+            Array.from(
+                document.querySelectorAll("h1.grouped-tags-tag")
+            )
+                .filter(element => Auto_Fill_Tag.includes(element.innerHTML))
+                .forEach(element => {
+                    const tag_el = element;
+
+                    const category  = tag_el.id.split("-")[0];
+                    const index     = tag_el.id.split("-")[1];
+
+                    document.querySelector(`div#tag-${category}-${index}`).classList.remove("hidden-tag");
+                    tag_el.classList.add("selected-tag");
+                });
+
+        }
+
+        // Handling adding selected tags
+        document.querySelectorAll("h1.grouped-tags-tag").forEach(element => {
+            element.addEventListener("click", event => {
+                const tag_el = event.target;
+
+                const category  = tag_el.id.split("-")[0];
+                const index     = tag_el.id.split("-")[1];
+
+                document.querySelector(`div#tag-${category}-${index}`).classList.remove("hidden-tag");
+                tag_el.classList.add("selected-tag");
+            });
+        });
+
+        // Handling removing selected tags
+        document.querySelectorAll("img.remove-tag-img").forEach(element => {
+            element.addEventListener("click", event => {
+                    const Raw_Id = event.target.id.slice("img-tag-".length);
+
+                    const category  = Raw_Id.split("-")[0];
+                    const index     = Raw_Id.split("-")[1];
+
+                    element.parentElement.parentElement.classList.add("hidden-tag");
+                    document.querySelector(`h1#${category}-${index}`).classList.remove("selected-tag");
+            });
+        });
+
+        document.querySelector("button#search-btn").addEventListener("click", Search);
+        document.querySelector("input#searchbar").addEventListener("keypress", event => {
+            if (event.code === "Enter") {
+                Search();
+            }
+        });
+
+        function Search () {
+            const query = document.querySelector("input#searchbar").value;
+            const tags  = Array.from(document.querySelectorAll("div.search-tag-btn-ctn h1"))
+                .filter(element => {
+                    return !element.parentElement.classList.contains("hidden-tag")
+                })
+                .map(tag_el => tag_el.innerHTML)
+                .join(",");
+
+            document.location = `./search.html?query=${query}&tag=${tags}`
+            // document.location = `./search.html?query=${query}&tag=${tags}&pages=${Query_Pages}&sortby=${Query_SortBy}`
+        }
+
+        function Group_Tags (Tags) {
+            const Grouped_Tags = [];
+
+            for (const Tag of Tags) {
+                const { category, tag } = Tag;
+
+                if (!Grouped_Tags.find(tag => tag.category === category)) {
+                    Grouped_Tags.push({
+                        category,
+                        tags: [ tag ]
+                    });
+                } else {
+                    Grouped_Tags.find(t => t.category === category).tags.push(tag)
+                }
+            }
+
+            return Grouped_Tags
+                .map(Tag_Data => {
+                    const { category, tags } = Tag_Data;
+
+                    return {
+                        category,
+                        tags: [...new Set(tags).values()]
+                            .sort()
+                    }
+                })
+                .sort((a,b) => {
+                    return a.tags.length - b.tags.length
+                })
+        }
+    </script>
+</body>
+</html>

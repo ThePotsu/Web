@@ -1,0 +1,21 @@
+div#content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#library-ctn {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#library-ctn .library {
+    margin-top: 2%;
+}

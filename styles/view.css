@@ -1,0 +1,482 @@
+div#content {
+    display         : flex;
+    flex-direction  : column;
+
+    align-items     : center;
+    justify-content : center;
+}
+
+div#content div#controls {
+    background-color: rgb(var(--black-dense));
+    
+    padding: 2%;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 5%;
+
+    width: calc(80% - 4%);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+div#content div#controls div#control-btns-menu-popup {
+    display: none;
+    
+    position: absolute;
+
+    background-color: rgb(var(--black-dense));
+    
+    padding: 2%;
+    border-radius: 10px;
+
+    flex-direction: column;
+    justify-content: flex-start;
+
+    margin-bottom: 5%;
+
+    width: calc(80% - 4%);
+
+    left: 10%;
+    top: 10%;
+
+    z-index: 1000000000;
+}
+
+div#content div#controls div#control-btns-menu-popup #top {
+    position: relative;
+}
+
+div#content div#controls div#control-btns-menu-popup #top button svg {
+    height: 40px;
+    width: 40px;
+    fill: rgb(var(--pink));
+}
+
+div#content div#controls div#control-btns-menu-popup #top .close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(var(--pink));
+
+    background-color: rgb(var(--black-dense));
+    border-radius: 50%;
+    padding: 10px;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot {
+    margin-top: calc(45px + 20px);
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    background-color: rgb(var(--black-denser));
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .animation {
+    background-color: rgb(var(--black-dense));
+    margin-right: 5px;
+    padding: 10px;
+
+    width: 40%;
+    height: 20vh;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .animation#size-display-ani div#parent {
+    width: 60%;
+    height: 80%;
+
+    background-color: rgb(var(--black));
+
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+
+    position: relative;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .animation#size-display-ani div#child {
+    width: 40%;
+    height: 60%;
+
+    background-color: rgb(var(--pink));
+
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .info {
+    width: 100%;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .info h4 {
+    font-size: 35px;
+    font-family: var(--title-font);
+    font-weight: lighter;
+
+    color: rgb(var(--plain-white));
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .info .group {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+
+    margin-left: 20px;
+
+    width: 100%;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .info .group h6 {
+    margin: 0;
+
+    font-size: 15px;
+    font-family: var(--title-font);
+    font-weight: bold;
+
+    color: rgb(var(--black));
+    background-color: rgb(var(--pink));
+    padding: 3px 20px 3px 20px;
+    border-radius: 20px;
+
+    text-align: left;
+    margin-bottom: 0;
+    text-transform: capitalize;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .info .group h5 {
+    margin: 0;
+
+    font-size: 15px;
+    font-family: var(--title-font);
+    font-weight: lighter;
+    font-style: italic;
+
+    color: rgb(var(--plain-white));
+    text-align: left;
+
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons {
+    margin-top: 40px;
+    width: 100%;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 20px;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.one-time button,
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.crowd button {
+    cursor: pointer;
+
+    display: inline-block;
+
+    border: none;
+    outline: none;
+    padding: 3px 20px 3px 20px;
+    border-radius: 10px;
+
+    background-color: rgb(var(--black));
+    color: rgb(var(--pink));
+
+    font-size: 20px;
+    font-family: var(--button-font);
+    font-weight: bolder;
+
+    transition: 0.5s;
+    margin: 5px;
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.one-time button:hover,
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.crowd button:hover {
+    color: rgb(var(--black));
+    background-color: rgb(var(--pink));
+}
+
+div#content div#controls div#control-btns-menu-popup #bot section .config .buttons button.true-value {
+    background-color: bisque;
+    color: rgb(var(--black));
+}
+
+div#content div#controls > .control-btn {
+    background-color: rgb(var(--black-denser));
+    color: rgb(var(--red));
+    
+    font-size: 50px;
+    font-family: monospace;
+    
+    padding: 0px 20px 0px 20px;
+    border-radius: 10px;
+    border: none;
+
+    margin: 2%;
+
+    cursor: pointer;
+}
+
+div#content div#viewer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div#content div#viewer div#action-btns {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(var(--black-dense));
+    padding: 5px;
+    border-radius: 3px;
+
+    width: calc(80% - 10px);
+}
+
+div#content div#viewer div#action-btns .action-btn {
+
+    margin: 10px;
+
+    background-color: rgb(var(--white));
+    border: none;
+
+    border-radius: 20px;
+    width: 5%;
+
+    padding: 10px;
+}
+
+div#content div#viewer div#action-btns .display {
+
+    text-align: center;
+    color: rgb(var(--plain-white));
+    font-family: monospace;
+    font-size: 27px;
+
+    margin: 25px;
+}
+
+div#content div#viewer div#action-btns .action-btn img {
+    width: 100%;
+}
+
+div#content div#viewer div#action-btns #prev-page.action-btn img {
+    rotate: 180deg;
+}
+
+div#content div#viewer div#action-btns #prev-page-all.action-btn img {
+    rotate: 180deg;
+}
+
+div#content div#viewer div#image-ctn {
+    margin-top: 20px;
+
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+div#content div#viewer button.multi-page-mode--invisible-page-btn {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: 1000;
+
+    border: none;
+    background-color: transparent;
+}
+
+div#content div#viewer button#multi-page-mode--invisible-page-btn-left {
+    left: 0;
+}
+
+div#content div#viewer button#multi-page-mode--invisible-page-btn-right {
+    left: 50%;
+}
+
+div#content div#viewer div.focused-view-element {
+    position: sticky;
+
+    width: 100%;
+    height: 20vh;
+
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+div#content div#viewer div#focused-view-element-top {
+    top: 0;
+}
+
+div#content div#viewer div#focused-view-element-bot {
+    bottom: 0;
+}
+
+div#content div#image-ctn img {
+    max-width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mutli-page-mode--hidden {
+    display: none !important;
+}
+
+.mutli-page-mode--viewing {
+    margin-bottom: 10%;
+}
+
+.blurred-doujin-image {
+    filter: blur(8px);
+}
+
+.rotate-180 {
+    rotate: 180deg;
+}
+
+@media only screen and (max-width: 1000px) {
+    div#content div#controls .control-btn {
+        font-size: 30px;
+    }
+
+    div#content div#viewer div#action-btns .action-btn {
+        width: 10%;
+    }
+    
+    div#content div#viewer div#action-btns .display {
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    div#content div#image-ctn {
+        width: 90%;
+    }
+
+    div#content div#controls div#control-btns-menu-popup {
+        width: calc(100% - 4%);
+        height: auto;
+
+        margin: 0px;
+        left: 0;
+        top: 0;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section {
+        flex-direction: column;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .animation {
+        width: 80%;
+
+        margin-top: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info h4 {
+        font-size: 70px;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info .group {
+        align-items: center;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info .group h6 {
+        font-size: 30px;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info .group h5 {
+        font-size: 20px;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .info .group * {
+        text-align: center;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.one-time,
+    div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.crowd {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.one-time button,
+    div#content div#controls div#control-btns-menu-popup #bot section .config .buttons.crowd button {
+        font-size: 40px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    div#content div#viewer div#action-btns .action-btn {
+        width: 14%;
+    }
+}

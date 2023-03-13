@@ -1,0 +1,110 @@
+div#filter-btns {
+    width: 90%;
+    margin-top: 10px;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    border-radius: 10px;
+
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+div#filter-btns::-webkit-scrollbar {
+    width: 1px;
+    height: 5px;
+
+    border-radius: 10px;
+}
+
+div#filter-btns::-webkit-scrollbar-track {
+    background-color: rgb(var(--black-denser));
+}
+
+div#filter-btns::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--pink));
+}
+
+div#filter-btns .default-filter-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    cursor: pointer;
+    margin: 10px;
+    padding: 6px 15px 6px 15px;
+    border-radius: 20px;
+
+    background-color: rgb(var(--plain-white));
+}
+
+div#filter-btns .default-filter-btn.clicked {
+    background-color: rgb(var(--pink));
+}
+
+div#filter-btns .default-filter-btn html,
+div#filter-btns .default-filter-btn body {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div#filter-btns .default-filter-btn svg {
+    height: 25px;
+    margin-right: 5px;
+    fill: rgb(var(--black));
+    stroke: none;
+
+    width: auto;
+}
+
+div#filter-btns .default-filter-btn.clicked svg {
+    fill: rgb(var(--plain-white));
+}
+
+div#filter-btns .default-filter-btn.clicked span {
+    color: rgb(var(--plain-white));
+}
+
+div#filter-btns .default-filter-btn span {
+    color: rgb(var(--black));
+    font-size: 18px;
+    font-family: var(--title-font);
+    font-weight: bold;    
+}
+
+
+
+@media only screen and (max-width: 800px) {
+    div#filter-btns {
+        width: 100%;
+        margin-right: 0%;
+        margin-left: 0%;
+    }
+
+    div#filter-btns .default-filter-btn span {
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    div#filter-btns .default-filter-btn span {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    div#filter-btns .default-filter-btn {
+        margin: 3px;
+    }
+
+    div#filter-btns .default-filter-btn span {
+        font-size: 16px;
+    }
+}

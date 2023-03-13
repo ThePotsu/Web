@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Hachan</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/index.css" rel="stylesheet">
+    <link href="./Web/styles/doujin.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+    <link href="./Web/styles/FilterButtons.css" rel="stylesheet">
+    <link href="./Web/styles/NewDoujinCards.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div id="new-doujins-cards-ctn"></div>
+
+    <div id="content">
+        <div id="buttons-ctn">
+            <button id="new-btn"     class="content-filter-btn pressed icon-btn-container">
+                <div class="inject-svg" id="new"></div>
+                <h1 class="icon-btn-label">Newly Added</h1>
+            </button>
+            <button id="all-btn"     class="content-filter-btn icon-btn-container">
+                <div class="inject-svg" id="doujin"></div>
+                <h1 class="icon-btn-label">All</h1>
+            </button>
+            <button id="random-btn" class="content-filter-btn icon-btn-container">
+                <div class="inject-svg" id="random"></div>
+                <h1 class="icon-btn-label">Random</h1>
+            </button>
+        </div>
+
+        <div id="filter-btns"></div>
+        <div id="doujins"></div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/RenderNewDoujinsOnly.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/RenderNewDoujinCards.js"></script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+
+    <script type="module">
+        import RenderDoujin         from "./Web/scripts/RenderDoujin.js";
+        import CDN                  from "./Scripts/@CDN.js";
+        const ImageDatas            = await CDN.AllGalleries();
+
+        
+        const Doujins_Container = document.querySelector("div#content #doujins");
+        const Buttons_Filter    = [
+            /* Sample
+            {
+                "button_id" : // id of button
+                filter      : // callback that returns boolean
+                sort        : // callback that returns 1, 0 or -1
+            }
+            */
+
+            { button_id : "new-btn", manipulate: null, filter: (doujin) => doujin.new, sort: null },
+
+            {
+                button_id   : "most-pages-btn",
+                manipulate  : null,
+                filter      : null,
+                sort        : (DoujinA, DoujinB) => {
+                    return DoujinA.pages - DoujinB.pages
+                }
+            },
+
+            { button_id : "all-btn", manipulate: null, filter: null, sort: null },
+
+            {
+                button_id   : "random-btn",
+                manipulate  : (array) => shuffle(array),
+                filter      : (_, i) => i <= 20,
+                sort        : null
+            }
+        ];
+
+
+        for (const Button_Filter_Data of Buttons_Filter) {
+            const { button_id, filter, manipulate, sort } = Button_Filter_Data;
+
+            document.querySelector(`button#${button_id}`)?.addEventListener("click", (event) => {
+                if (document.querySelector(".pressed").id !== "random-btn" && document.querySelector(".pressed").id === button_id) return;
+
+                document.querySelector(".pressed").classList.remove("pressed");
+                if (event.target.nodeName === "H1" || event.target.nodeName === "IMG") {
+                    event.target.parentElement.classList.add("pressed");
+                } else {
+                    event.target.classList.add("pressed");
+                }
+
+
+                let DoujinsData = [...ImageDatas];
+
+                if (typeof manipulate === "function") {
+                    DoujinsData = manipulate(DoujinsData);
+                }
+
+                if (typeof filter === "function") {
+                    DoujinsData = DoujinsData.filter(filter);
+                }
+
+                if (typeof sort === "function") {
+                    DoujinsData = DoujinsData.sort(sort).reverse();
+                }
+
+                Doujins_Container.innerHTML = "";
+
+                let NewImagesData = [];
+                for (const Data of ImageDatas) {
+                    if (DoujinsData.find(doujin => doujin.id === Data.id)) {
+                        NewImagesData.push(Data)
+                    }
+                }
+
+                DoujinsData.forEach(doujin => {
+                    RenderDoujin(doujin, Doujins_Container);
+                });
+            });
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length,  randomIndex;
+
+            // While there remain elements to shuffle.
+            while (currentIndex != 0) {
+
+                // Pick a remaining element.
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+            }
+
+            return array;
+        }
+    </script>
+</body>
+</html>

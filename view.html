@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Hachan | View</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/view.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div id="content">
+        <div id="controls">
+            <button class="action-btn control-btn" id="popup-menu">Menu</button>
+
+            <div id="control-btns-menu-popup">
+                <div id="top">
+                    <button id="close-control-btns-menu-popup-btn" class="close-btn control-btn">
+                        <div class="inject-svg" id="close"></div>
+                    </button>
+                </div>
+                <div id="bot">
+                    <section>
+                        <div class="animation" id="size-display-ani">
+                            <div id="parent">
+                                <div id="child"></div>
+                            </div>
+                        </div>
+                        <div class="config">
+                            <div class="info">
+                                <h4 class="label" id="size-display">Zoom</h4>
+                                <div class="group">
+                                    <h5 class="description">Focused View: Off</h5>
+                                    <h6 class="value" id="size-display-val">0%</h6>
+                                </div>
+                            </div>
+                            <div class="buttons crowd">
+                                <button id="inc-size" class="btn control-btn">+</button>
+                                <button id="dec-size" class="btn control-btn">-</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="animation" id="display-mode-ani">
+                            <div id="parent">
+                                <div id="child"></div>
+                                <div id="child"></div>
+                                <div id="child"></div>
+                                <div id="child"></div>
+                            </div>
+                        </div>
+                        <div class="config">
+                            <div class="info">
+                                <h4 class="label" id="display-mode-display">Display</h4>
+                                <div class="group">
+                                    <h5 class="description">Focused View</h5>
+                                    <h6 class="value" id="display-mode-val"></h6>
+                                </div>
+                            </div>
+                            <div class="buttons one-time">
+                                <button id="display" class="btn control-btn">Endless Display</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="animation" id="focused-view-ani">
+                            <div id="parent">
+                                <div id="upper-filter"></div>
+                                <div id="page"></div>
+                                <div id="lower-filter"></div>
+                            </div>
+                        </div>
+                        <div class="config">
+                            <div class="info">
+                                <h4 class="label" id="focused-view-display">Focused View</h4>
+                                <div class="group">
+                                    <h5 class="description">Focused View: Off</h5>
+                                    <h6 class="value" id="focused-view-val"></h6>
+                                </div>
+                            </div>
+                            <div class="buttons one-time">
+                                <button id="focused-view-btn" class="btn control-btn">Turn On</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="viewer">
+            <div id="action-btns" class="hidden">
+                <button id="prev-page-all" class="action-btn control-btn">
+                    <img src="./Web/content/icon/skip.svg">
+                </button>
+
+                <button id="prev-page" class="action-btn control-btn">
+                    <img src="./Web/content/img/next-page.png">
+                </button>
+
+                <h1 id="display-page" class="display"></h1>
+                
+                <button id="next-page" class="action-btn control-btn">
+                    <img src="./Web/content/img/next-page.png">
+                </button>
+
+                <button id="next-page-all" class="action-btn control-btn rotate-180">
+                    <img src="./Web/content/icon/unskip.svg">
+                </button>
+            </div>
+
+            <div id="image-ctn">
+                <div class="focused-view-element" id="focused-view-element-top"></div>
+
+                <button class="control-btn multi-page-mode--invisible-page-btn" id="multi-page-mode--invisible-page-btn-left"></button>
+                <button class="control-btn multi-page-mode--invisible-page-btn" id="multi-page-mode--invisible-page-btn-right"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+
+    <script type="module">
+        let currently_blurred_top = { page: null, element: null };
+        let currently_blurred_bot = { page: null, element: null };
+
+        // document.addEventListener("scroll", event => {
+            // if (localStorage.getItem("display") === "endless") {
+            //     const elements = Array.from(document.querySelectorAll(".doujin-image"))
+            //         .filter(element => {
+            //             return PercentageSeen(element) >= 20
+            //         })
+
+            //     const top = Number(elements[elements.length - 2]?.id.slice("img-".length)) - 1;
+            //     const bot = Number(elements[elements.length - 1]?.id.slice("img-".length)) + 1;
+                
+            //     const top_el = document.querySelector(`#img-${top}`);
+            //     const bot_el = document.querySelector(`#img-${bot}`);
+
+
+            //     console.log(currently_blurred_top.page, top, "===", currently_blurred_bot.page, bot)
+            //     if (bot === document.querySelectorAll(".doujin-image").length - 1) {
+            //         document.querySelector(`#img-${currently_blurred_top.page}`)?.classList.remove("blurred-doujin-image");
+            //     } else
+
+            //     if (currently_blurred_top.page !== top) {
+            //         document.querySelector(`#img-${currently_blurred_top.page}`)?.classList.remove("blurred-doujin-image");
+
+            //         currently_blurred_top.page      = top;
+            //         currently_blurred_top.element   = top_el;
+
+            //         top_el?.classList.add("blurred-doujin-image");
+            //     }
+
+                
+            //     if (bot === document.querySelectorAll(".doujin-image").length) {
+            //         document.querySelector(`#img-${currently_blurred_bot.page}`)?.classList.remove("blurred-doujin-image");
+            //     } else
+
+            //     if (currently_blurred_bot.page !== bot) {
+            //         document.querySelector(`#img-${currently_blurred_bot.page}`)?.classList.remove("blurred-doujin-image");
+
+            //         currently_blurred_bot.page      = bot;
+            //         currently_blurred_bot.element   = bot_el;
+
+            //         bot_el?.classList.add("blurred-doujin-image");
+            //     }
+            // }
+        // });
+
+        function PercentageSeen (element) 
+        {
+            // Get the relevant measurements and positions
+            const viewportHeight = window.innerHeight;
+            const scrollTop = window.scrollY;
+            const elementOffsetTop = element.offsetTop;
+            const elementHeight = element.getBoundingClientRect().height;
+            // const elementHeight = element.offsetHeight;
+
+            // Calculate percentage of the element that's been seen
+            const distance = scrollTop + viewportHeight - elementOffsetTop;
+            const percentage = Math.round(
+                distance / ((viewportHeight + elementHeight) / 100)
+            );
+
+            // Restrict the range to between 0 and 100
+            return Math.min(100, Math.max(0, percentage));
+        };
+    </script>
+    <script type="module">
+        let Menu_Opened  = false;
+        let Current_Page = 1;
+
+        import CDN                  from "./Scripts/@CDN.js";
+        const ImageDatas            = await CDN.AllGalleries();
+        
+        const params    = new URLSearchParams(window.location.search);
+        const Doujin_Ids = params.get("v").split(",").map(id => id.trim()).filter(str => str.length >= 1);
+        let Pages = 0;
+
+        for (const Doujin_Id of Doujin_Ids) {
+            const Doujin    = ImageDatas.find(d => d.id === Doujin_Id);
+            const D_Pages     = Doujin.pages;
+
+            Pages += D_Pages;
+            
+            for (let page = 0 ; page < D_Pages ; page++) {
+                const image_el          = document.createElement("img");
+                const image_extension   = ImageDatas.find(d => d.id === Doujin_Id).special_formats.find(
+                    ({ page:current_page }) => current_page === (page + 1)
+                )?.format || "jpg";
+
+                image_el.classList.add("doujin-image");
+
+                image_el.id = `img-${page + 1}`;
+                image_el.src = CDN.ImageURL(Doujin, page + 1);
+                // image_el.src = `../hachan-cdn//${Doujin_Id}/${page + 1}.jpg`;
+                
+                document.body.appendChild(image_el);
+                document.querySelector("div#content div#image-ctn").appendChild(image_el);
+            }
+        }
+
+        document.querySelector("div#content div#image-ctn").innerHTML += `<div class="focused-view-element ${localStorage.getItem("focused-view") ? "" : "hidden"}" id="focused-view-element-bot"></div>`;
+
+
+        // =========================
+        SetDisplayMode(localStorage.getItem("display") || "endless");
+        InnerHTML("h6#display-mode-val").set(`${localStorage.getItem("display") || "endless"}`);
+
+        document.querySelector("div#content div#image-ctn").style.width = `${localStorage.getItem("image-size")}%`;
+        InnerHTML("h6#size-display-val").set((current_content) => current_content.replace(/[0-9]+/, localStorage.getItem("image-size")));
+
+        SetFocusedView(localStorage.getItem("focused-view") === "true");
+        InnerHTML("h6#focused-view-val").set(`${(localStorage.getItem("focused-view") === "true") ? "On" : "Off"}`);
+        InnerHTML("button#focused-view-btn").set(`Turn ${(localStorage.getItem("focused-view") === "true") ? "Off" : "On"}`);
+
+        if (localStorage.getItem("focused-view") === "true") {
+            document.querySelector("button#focused-view-btn").classList.add("true-value");
+        } else {
+            document.querySelector("button#focused-view-btn").classList.remove("true-value");
+        }
+        // =========================
+
+
+
+        if (!localStorage.getItem("history")) {
+            localStorage.setItem("history", JSON.stringify(
+                Doujin_Ids.map(id => {
+                    return { id, time: Date.now() }
+                })
+            ));
+        } else {
+            const history = JSON.parse(localStorage.getItem("history"));
+
+            Doujin_Ids.forEach(id => {
+                history.push({ id, time: Date.now() });
+            })
+
+            localStorage.setItem("history", JSON.stringify(history));
+        }
+
+
+
+        document.querySelectorAll("button.control-btn").forEach(element => {
+            element.addEventListener("click", (ClickEvent) => {
+                switch (element.id) {
+                    case "close-control-btns-menu-popup-btn":
+                    case "popup-menu": {
+                        const Popup_Menu_Element_Id = "div#control-btns-menu-popup";
+
+                        if (Menu_Opened) {
+                            document.querySelector(Popup_Menu_Element_Id).style.display = "none";
+                        } else {
+                            document.querySelector(Popup_Menu_Element_Id).style.display = "flex";
+                        }
+
+                        Menu_Opened = !Menu_Opened;
+                    } break;
+
+                    case "inc-size": {
+                        const CacheSize = 
+                            localStorage.getItem("image-size") 
+                                || 
+                            Number(document.querySelector("div#content div#image-ctn").style.width.match(/[0-9]+/)?.[0])
+                                ||
+                            100;
+
+
+                        const SizeToSet = Math.min(100, Number(CacheSize) + 10);
+
+                        localStorage.setItem("image-size", SizeToSet);
+                        document.querySelector("div#content div#image-ctn").style.width = `${SizeToSet}%`;
+
+                        InnerHTML("h6#size-display-val").set((current_content) => current_content.replace(/[0-9]+/, SizeToSet));
+                    } break;
+
+                    case "dec-size": {
+                        const CacheSize = 
+                            localStorage.getItem("image-size") 
+                                || 
+                            Number(document.querySelector("div#content div#image-ctn").style.width.match(/[0-9]+/)?.[0])
+                                ||
+                            100;
+
+
+                        const SizeToSet = Math.max(10, Number(CacheSize) - 10);
+
+                        localStorage.setItem("image-size", SizeToSet);
+                        document.querySelector("div#content div#image-ctn").style.width = `${SizeToSet}%`;
+
+                        InnerHTML("h6#size-display-val").set((current_content) => current_content.replace(/[0-9]+/, SizeToSet));
+                    } break;
+
+                    case "display": {
+                        const CachedDisplay = localStorage.getItem("display");
+
+                        let Display_To_Set = "endless";
+
+                        if (CachedDisplay === Display_To_Set) {
+                            Display_To_Set = "multi-page"
+                        }
+
+                        localStorage.setItem("display", Display_To_Set);
+                        SetDisplayMode(Display_To_Set);
+                        InnerHTML("h6#display-mode-val").set(`${Display_To_Set}`);
+                    } break;
+
+                    case "multi-page-mode--invisible-page-btn-right":
+                    case "prev-page": {
+                        Current_Page = Math.max(1, Current_Page - 1);
+                        MultiPage__Display();
+                    } break;
+
+                    case "multi-page-mode--invisible-page-btn-left":
+                    case "next-page": {
+                        Current_Page = Math.min(Pages, Current_Page + 1);
+                        MultiPage__Display();
+                    } break;
+
+                    case "prev-page-all": {
+                        Current_Page = 1;
+                        MultiPage__Display();
+                    } break;
+
+                    case "next-page-all": {
+                        Current_Page = Pages;
+                        MultiPage__Display();
+                    } break;
+
+                    case "focused-view-btn": {
+                        if (localStorage.getItem("focused-view") === "true") {
+                            localStorage.setItem("focused-view", false);
+                            InnerHTML("h6#focused-view-val").set("Off");
+                            SetFocusedView(false);
+                        } else {
+                            localStorage.setItem("focused-view", true);
+                            InnerHTML("h6#focused-view-val").set("On");
+                            SetFocusedView(true);
+                        }
+
+                        if (localStorage.getItem("focused-view") === "true") {
+                            document.querySelector("button#focused-view-btn").classList.add("true-value");
+                        } else {
+                            document.querySelector("button#focused-view-btn").classList.remove("true-value");
+                        }
+                        
+                        InnerHTML("button#focused-view-btn").set(`Turn ${(localStorage.getItem("focused-view") === "true") ? "Off" : "On"}`);
+                    } break;
+                }
+            })
+        });
+
+        function SetFocusedView (on) {
+            if (on) {
+                document.querySelector("#focused-view-element-top").classList.remove("hidden");
+                document.querySelector("#focused-view-element-bot")?.classList.remove("hidden");
+            } else {
+                document.querySelector("#focused-view-element-top").classList.add("hidden");
+                document.querySelector("#focused-view-element-bot")?.classList.add("hidden");
+            }
+        }
+
+        function InnerHTML (selector) {
+            return {
+                innerHTML   : document.querySelector(selector),
+                set         : (content) => {
+                    if (typeof content === "function") {
+                        document.querySelector(selector).innerHTML = content(document.querySelector(selector).innerHTML);
+                    } else {
+                        document.querySelector(selector).innerHTML = content;
+                    }
+                }
+            }
+        }
+
+        function MultiPage__Display () 
+        {
+            document.querySelector("img.mutli-page-mode--viewing").classList.add("mutli-page-mode--hidden");
+            document.querySelector("img.mutli-page-mode--viewing").classList.remove("mutli-page-mode--viewing");
+
+            document.querySelector(`img#img-${Current_Page}`).classList.add("mutli-page-mode--viewing");
+            document.querySelector(`img#img-${Current_Page}`).classList.remove("mutli-page-mode--hidden");
+
+            document.querySelector("h1#display-page").innerHTML = `${Current_Page} / ${Pages}`;
+        }
+  
+        function SetDisplayMode (mode) {
+            switch (mode) {
+                case "multi-page": {
+                    document.querySelectorAll(`img.doujin-image`)
+                        .forEach((element, index) => {
+                            if (index + 1 === Current_Page) {
+                                element.classList.add("mutli-page-mode--viewing");
+                            } else {
+                                element.classList.add("mutli-page-mode--hidden");
+                            }
+                        });
+
+                    document.querySelectorAll("button.multi-page-mode--invisible-page-btn.hidden").forEach(element => {
+                        element.classList.remove("hidden");
+                    });
+
+                    document.querySelector("div#viewer div#action-btns").classList.remove("hidden");
+                    document.querySelector("h1#display-page").innerHTML = `${Current_Page} / ${Pages}`;
+                    document.querySelector("button.control-btn#display").innerHTML = "Multi Page Display";
+                } break;
+
+                case "endless": {
+                    document.querySelectorAll(`img.mutli-page-mode--hidden`)
+                        .forEach(element => element.classList.remove("mutli-page-mode--hidden"));
+
+                    document.querySelectorAll("button.multi-page-mode--invisible-page-btn").forEach(element => {
+                        element.classList.add("hidden");
+                    });
+
+                    document.querySelector("img.mutli-page-mode--viewing")?.classList.remove("mutli-page-mode--viewing");
+
+                    document.querySelector("div#viewer div#action-btns").classList.add("hidden");
+
+                    document.querySelector("button.control-btn#display").innerHTML = "Endless Display";
+                } break;
+            }
+        }
+    </script>
+</body>
+</html>

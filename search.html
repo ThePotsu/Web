@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Hachan | Search</title>
+
+
+    <link href="./Web/styles/global.css" rel="stylesheet">
+    <link href="./Web/styles/search.css" rel="stylesheet">
+    <link href="./Web/styles/doujin.css" rel="stylesheet">
+    <link href="./Web/styles/flag.css" rel="stylesheet">
+    <link href="./Web/styles/navbar.css" rel="stylesheet">
+    <link href="./Web/styles/FilterButtons.css" rel="stylesheet">
+
+    <link rel="icon" href="./Web/content/img/icon.png" type="image/x-icon"/>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div id="content">
+        <div id="buttons-ctn">
+        </div>
+
+        <h1 id="search-result-amount"></h1>
+
+        <div id="filter-btns"></div>
+        <div id="doujins"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="module" src="./Web/scripts/Navbar.js"></script>
+    <script type="module" src="./Web/scripts/RenderSearchDoujins.js"></script>
+    <script type="module" src="./Web/scripts/InjectSVG.js"></script>
+    <script type="module" src="./Web/scripts/GlobalScript.js"></script>
+
+    <script type="module">
+        import RenderDoujin         from "./Web/scripts/RenderDoujin.js";
+        import CDN                  from "./Scripts/@CDN.js";
+
+
+        const ImageDatas            = await CDN.AllGalleries();
+        const Doujins_Container     = document.querySelector("div#content #doujins");
+        const Filtered_Directories  = Array.from(document.querySelectorAll(".doujin"))
+            .map(Doujin_Element => {
+                return ImageDatas.find(d => d.id === Doujin_Element.id)
+            });
+
+        const Buttons_Filter    = [
+            /* Sample
+            {
+                "button_id" : // id of button
+                filter      : // callback that returns boolean
+                sort        : // callback that returns 1, 0 or -1
+            }
+            */
+
+            { button_id : "new-btn", filter: null, sort: null },
+
+            {
+                button_id   : "most-pages-btn",
+                filter      : null,
+                sort        : (DoujinA, DoujinB) => {
+                    return DoujinA.pages - DoujinB.pages
+                }
+            }
+        ];
+
+
+        for (const Button_Filter_Data of Buttons_Filter) {
+            const { button_id, filter, sort } = Button_Filter_Data;
+
+            document.querySelector(`button#${button_id}`).addEventListener("click", (event) => {
+                if (document.querySelector(".pressed").id === button_id) return;
+
+                document.querySelector(".pressed").classList.remove("pressed");
+                if (event.target.nodeName === "H1" || event.target.nodeName === "IMG") {
+                    event.target.parentElement.classList.add("pressed");
+                } else {
+                    event.target.classList.add("pressed");
+                }
+
+
+                let DoujinsData = [...Filtered_Directories];
+
+                if (typeof manipulate === "function") {
+                    DoujinsData = manipulate(DoujinsData);
+                }
+
+                if (typeof filter === "function") {
+                    DoujinsData = DoujinsData.filter(filter);
+                }
+
+                if (typeof sort === "function") {
+                    DoujinsData = DoujinsData.sort(sort).reverse();
+                }
+
+                Doujins_Container.innerHTML = "";
+
+                let NewImagesData = [];
+                for (const Data of Filtered_Directories) {
+                    if (DoujinsData.find(doujin => doujin.id === Data.id)) {
+                        NewImagesData.push(Data)
+                    }
+                }
+
+                DoujinsData.forEach(doujin => {
+                    RenderDoujin(doujin, Doujins_Container);
+                });
+            });
+        }
+
+
+        document.querySelectorAll("button.action-btn").forEach(element => {
+            element.addEventListener("click", event => {
+                switch (element.id) {
+                    case "random-btn": {
+                        const All_Doujins = Array.from(document.querySelectorAll(".doujin"));
+
+                        window.location.href = All_Doujins[Math.floor(Math.random() * All_Doujins.length)].href;
+                    } break;
+                }
+            });
+        })
+    </script>
+</body>
+</html>

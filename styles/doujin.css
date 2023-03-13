@@ -1,0 +1,231 @@
+a.doujin {
+    display             : inline-flex;
+    flex-direction      : row;
+    align-items         : center;
+    justify-content     : center;
+
+    width: 100%;
+}
+
+a.doujin div#container {
+    width   : 100%;
+    height  : 100%;
+
+    display             : flex;
+    flex-direction      : column;
+
+    background-color: rgb(var(--black-denser));
+    border-radius: 10px;
+
+    position: relative;
+
+    transition: background 1s;
+}
+
+a.doujin div#container img.doujin-image {
+    max-width       : 100%;
+    border-radius   : 10px;
+
+    visibility: visible;
+    opacity: 1;
+}
+
+a.doujin div#container img.doujin-image-preview {
+    transition: visibility 0s, opacity 0.25s;
+
+    visibility: hidden;
+    opacity: 0;
+
+    height: 0px;
+    width: 0px;
+}
+
+a.doujin:hover div#container {
+    background-color: rgb(var(--white-denser));
+}
+
+a.doujin:hover  div#container img.doujin-image {
+    visibility: hidden;
+    opacity: 0;
+    height: 0px;
+    width: 0px;
+}
+
+a.doujin:hover div#container img.doujin-image-preview {
+    visibility: visible;
+    opacity: 1;
+
+    height: auto;
+    width: auto;
+
+    max-width       : 100%;
+    border-radius   : 10px;
+}
+
+a.doujin div#container div#content {
+    display: flex;
+
+
+    flex-direction  : column;
+    align-items     : center;
+    justify-content : center;
+}
+
+a.doujin div#container div#content #top {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+a.doujin div#container div#content #top div.doujin-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a.doujin div#container div#content #top div.doujin-title > * {
+    flex: 1;
+}
+
+a.doujin div#container div#content #top div.doujin-title > span {
+    display: inline-block;
+}
+
+a.doujin:hover div#container div#content #top div.doujin-title h1.title-end {
+    display: block;
+}
+
+a.doujin:hover div#container div#content #top div.doujin-title h1 {
+    background-color: rgb(var(--black)) !important;
+}
+
+a.doujin div#container div#content #top div.doujin-title h1.title-start,
+a.doujin div#container div#content #top div.doujin-title h1.title-end {
+    text-align: center;
+
+    color: rgb(var(--white));
+    font-family: monospace;
+    font-size: 13px;
+
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+
+    transition: background 1s;
+
+    background-color: inherit;
+}
+
+a.doujin div#container div#content #top div.doujin-title h1.title-end {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    top: 100%;
+    left: 0;
+}
+
+a.doujin div#container div#content #top h1#last-read {
+    color: rgb(var(--black-denser));
+    background-color: rgb(var(--white-dense));
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+
+a.doujin div#container div#content #top div#doujin-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+    border-radius: 5px;
+
+    width: 90%;
+}
+
+a.doujin div#container div#content #top div#doujin-data div.doujin-language {
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(var(--white-dense));
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.5s;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+    width: 100%;
+}
+
+a.doujin div#container div#content #top div#doujin-data div.doujin-language img {
+    height: 30px;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+a.doujin div#container div#content #top div#doujin-data div.doujin-language h1 {
+    color: rgb(var(--white-dense));
+    text-transform: capitalize;
+
+    margin: 0;
+
+    font-size: 15px;
+    font-family: var(--default-font);
+    font-weight: 400;
+
+    text-align: center;
+}
+
+a.doujin div#container div#content #top div#doujin-data h1.doujin-pages,
+a.doujin div#container div#content #top div#doujin-data h1.doujin-category {
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(var(--white-dense));
+
+    text-align: center;
+
+    color: rgb(var(--white-dense));
+    text-transform: capitalize;
+
+    font-size: 15px;
+    font-family: var(--default-font);
+    font-weight: 400;
+
+    width: 100%;
+}
+
+a.doujin div#container div#content #top div#doujin-data div.doujin-language,
+a.doujin div#container div#content #top div#doujin-data h1.doujin-pages,
+a.doujin div#container div#content #top div#doujin-data h1.doujin-category {
+    margin: 2px;
+    flex: 1;
+    border-radius: 3px;
+
+    padding: 4px;
+}
+
+a.doujin div#container div#content #bot {
+    display: none;
+}
+
+
+/* @media only screen and (max-width: 800px) {
+} */

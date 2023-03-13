@@ -1,0 +1,135 @@
+div#content {
+    width: 100%;
+}
+
+div#content div#container {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: auto auto;
+
+    align-items: center;
+    justify-content: center;
+
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+div#content div#container .artist {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+div#content div#container .artist div#left {
+    width: 30%;
+    
+    background-color: rgb(var(--black-denser));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 40vh;
+    border-radius: 10px 0px 0px 10px;
+}
+
+div#content div#container .artist div#left > h1 {
+    color: rgb(var(--pink));
+
+    font-family: var(--title-font);
+    font-weight: lighter;
+    font-size: 20px;
+    text-transform: capitalize;
+
+    text-align: center;
+}
+
+div#content div#container .artist div#left div.go-to-galleries {
+    background-color: rgb(var(--plain-white));
+    padding: 0px 5px 0px 5px;
+    border-radius: 20px;
+}
+
+div#content div#container .artist div#left div.go-to-galleries h1 {
+    color: rgb(var(--black));
+    font-size: 13px;
+    font-family: var(--button-font);
+    font-weight: bold;
+}
+
+div#content div#container .artist div#right {
+    width: 70%;
+
+    display: flex;
+}
+
+div#content div#container .artist div#right .artworks {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+div#content div#container .artist div#right .artworks img {
+    flex: 1;
+
+    width: 33.33%;
+    height: 40vh;
+
+    object-fit: cover;
+}
+
+div#content div#container .artist div#right .artworks img:last-child {
+    border-radius: 0px 10px 10px 0px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    div#content div#container {
+        grid-template-columns: 48% 48%;
+    }
+
+    div#content div#container .artist {
+        flex-direction: column-reverse;
+    }
+
+    div#content div#container .artist div#left {
+        width: 100%;
+        height: auto;
+
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    div#content div#container .artist div#right {
+        width: 100%;
+    }
+
+    div#content div#container .artist div#right .artworks img:first-child {
+        border-radius: 10px 0px 0px 0px;
+    }
+
+    div#content div#container .artist div#right .artworks img:last-child {
+        border-radius: 0px 10px 0px 0px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    div#content div#container .artist div#left > h1 {
+        font-size: 30px;
+    }
+    
+    div#content div#container .artist div#left div.go-to-galleries h1 {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    div#content div#container {
+        grid-template-columns: auto;
+    }
+}
