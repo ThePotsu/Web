@@ -1,15 +1,11 @@
-const BaseURL = "https://github.com/ThePotsu";
+const BaseURL = "https://raw.githubusercontent.com/ThePotsu";
 
 export default {
     ImageURL: function (GalleryData, page) {
-        console.log(GalleryData)
-        return `${BaseURL}/CDN-${GalleryData.CDN}/${GalleryData.id}/${page}.${GalleryData.special_formats.find(f => f.page === page)?.format || "jpg"}`;
+        return `${BaseURL}/CDN-${GalleryData.CDN}/main/${GalleryData.id}/${page}.${GalleryData.special_formats.find(f => f.page === page)?.format || "jpg"}`;
     },
 
     AllGalleries: async function () {
-        console.log("loading");
-        console.log(await this.__LoadJSON("CDN-1"));
-
         const Galleries = [];
         for (let CDN = 1 ; CDN < ((await this.CDNs()).CDNS + 1) ; CDN++) {
             Galleries.push(...((await this.CDN(CDN)).galleries));
