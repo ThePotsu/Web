@@ -6,6 +6,9 @@ export default {
     },
 
     AllGalleries: async function () {
+        console.log("loading");
+        console.log(await this.__LoadJSON("CDN-1"));
+        
         const Galleries = [];
         for (let CDN = 1 ; CDN < ((await this.CDNs()).CDNS + 1) ; CDN++) {
             Galleries.push(...((await this.CDN(CDN)).galleries));

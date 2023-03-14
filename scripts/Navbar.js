@@ -123,7 +123,7 @@ Navbar.innerHTML =
             <div class="searchbar">
                 <input type="text" id="searchbar" value="${Search_Input_Default_Value}">
                 <button id="search-btn">
-                    <img src="./Web/content/icon/search.svg">
+                    <img src="./content/icon/search.svg">
                 </button>
             </div>
 
