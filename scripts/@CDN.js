@@ -11,6 +11,7 @@ export default {
             Galleries.push(...((await this.CDN(CDN)).galleries));
         }
 
+        console.log(Galleries, ((await this.CDNs()).CDNS + 1), (await this.CDNs()))
         return Galleries;
     },
 
