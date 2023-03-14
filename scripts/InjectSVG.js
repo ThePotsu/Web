@@ -2,7 +2,7 @@ document.querySelectorAll("div.inject-svg").forEach(element => {
     const Parent = element.parentElement;
 
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", `./Web/content/icon/${element.id.split(";")[0]}.svg`, false);
+    rawFile.open("GET", `./content/icon/${element.id.split(";")[0]}.svg`, false);
     rawFile.onreadystatechange = function ()
     {
         if(rawFile.readyState === 4)
