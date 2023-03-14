@@ -23,6 +23,6 @@ export default {
     },
 
     __LoadJSON: async function (CDN) {
-        return import(`../data/${CDN}-catalogue.json`);
+        return (await fetch(`../data/${CDN}-catalogue.json`, { method: "GET" })).body;
     }
 }
