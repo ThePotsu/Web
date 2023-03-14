@@ -2,6 +2,7 @@ const BaseURL = "https://github.com/ThePotsu";
 
 export default {
     ImageURL: function (GalleryData, page) {
+        console.log(GalleryData)
         return `${BaseURL}/CDN-${GalleryData.CDN}/${GalleryData.id}/${page}.${GalleryData.special_formats.find(f => f.page === page)?.format || "jpg"}`;
     },
 
