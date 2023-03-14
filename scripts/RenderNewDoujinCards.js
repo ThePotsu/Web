@@ -16,7 +16,7 @@ const RenderDoujins = () => {
                             new Array(Math.min(3 || doujin.pages))
                                 .fill(1)
                                 .map((undefined, i) => {
-                                    return `<img src="${CDN.ImageURL(doujin.id, i + 1, doujin)}">`
+                                    return `<img src="${CDN.ImageURL(doujin, i + 1)}">`
                                 })
                                 .join("\n")
                         }
