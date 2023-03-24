@@ -4,10 +4,10 @@ const ImageDatas        = await CDN.AllGalleries();
 const Parent            = document.querySelector("div#content div#container");
 const List_Content      = document.querySelector("div#content").dataset.content;
 
-console.log(ImageDatas.map(data => data.tags).flat())
+console.log(ImageDatas.map(data => data.tags).flat().flat())
 const Lists = [
     ...new Set(
-        Group_Tags(ImageDatas.map(data => data.tags).flat())
+        Group_Tags(ImageDatas.map(data => data.tags).flat().flat())
             .find(tag => tag.category === List_Content)
             .tags
     ).values()
