@@ -1,4 +1,4 @@
-import libraries    from "../../Data/Library.json" assert { type: "json" };
+import libraries    from "../data/Library.json" assert { type: "json" };
 import CDN          from "./@CDN.js";
 
 const ImageDatas        = await CDN.AllGalleries();

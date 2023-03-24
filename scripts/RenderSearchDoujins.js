@@ -1,6 +1,7 @@
 import IncludeFilterBtns    from "./IncludeFilterButtons.js";
 import RenderDoujin         from "./RenderDoujin.js";
 import CDN                  from "./@CDN.js";
+import Paginator            from "./Paginator.js";
 
 const ImageDatas            = await CDN.AllGalleries();
 
@@ -95,7 +96,7 @@ const Filtered_Directories = Directories
         return 1;
     })
 
-Filtered_Directories.forEach((Directory) => {
+(await Paginator(Filtered_Directories)).forEach((Directory) => {
     RenderDoujin(Directory, Doujins_Container);
 });
 

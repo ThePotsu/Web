@@ -1,8 +1,9 @@
 import RenderDoujin         from "./RenderDoujin.js";
 import IncludeFilterBtns    from "./IncludeFilterButtons.js";
 import CDN                  from "./@CDN.js";
+import Paginator            from "./Paginator.js";
 
-const ImageDatas            = await CDN.AllGalleries();
+const ImageDatas            = await Paginator(await CDN.AllGalleries());
 
 
 IncludeFilterBtns();

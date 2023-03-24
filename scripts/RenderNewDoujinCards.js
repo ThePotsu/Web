@@ -1,8 +1,9 @@
 import CDN          from "./@CDN.js";
+import Paginator    from "./Paginator.js";
 
 const ImageDatas        = await CDN.AllGalleries();
 const Parent            = document.querySelector("div#new-doujins-cards-ctn");
-const NewDoujins        = ImageDatas.filter(d => d.new);
+const NewDoujins        = await Paginator(ImageDatas.filter(d => d.new));
 
 
 const RenderDoujins = () => {

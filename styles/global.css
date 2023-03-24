@@ -46,6 +46,22 @@ span.de-highlight {
     cursor: pointer;
 }
 
+div#page-buttons-ctn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+div#page-buttons-ctn a.page-btn-rdr {
+    padding: 5px;
+    border: solid 1px white;
+    font-size: 15px;
+    font-family: monospace;
+    margin: 5px;
+}
+
 :root {
     --plain-white: 255, 255, 255;
     --white: 240, 233, 210;
