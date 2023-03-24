@@ -36,11 +36,7 @@ export default async function FilterImageDatas (ImageDatas) {
     }
 
     
-    return {
-        data    : ImageDatasToRender,
-        pages   : Pages,
-        page    : Page
-    }
+    return ImageDatasToRender;
 
 
     function GenURL (page)
