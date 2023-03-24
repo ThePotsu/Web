@@ -4,7 +4,7 @@ const ImageDatas        = await CDN.AllGalleries();
 const Parent            = document.querySelector("div#content div#container");
 const List_Content      = document.querySelector("div#content").dataset.content;
 
-console.log(JSON.stringify(ImageDatas.map(data => data.tags).flat(), null, 2), "pshdhjdbjhdb")
+
 const Lists = [
     ...new Set(
         Group_Tags(ImageDatas.map(data => data.tags).flat().flat())
@@ -96,8 +96,8 @@ function Image_Extension (page, gallery_data)
 function Group_Tags (Tags)
 {
     const Grouped_Tags = [];
-    console.log({ Tags })
     for (const Tag of Tags) {
+	  if (!Tag) continue;
         const { category, tag } = Tag;
 
         if (!Grouped_Tags.find(tag => tag.category === category)) {
