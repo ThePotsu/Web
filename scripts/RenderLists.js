@@ -20,7 +20,7 @@ Lists
 
         function artworks (Query)
         {
-            return ImageDatas.filter(data => data.tags.some(({ tag }) => tag === Query)).length;
+            return ImageDatas.filter(data => (data.tags || []).some(({ tag }) => tag === Query)).length;
         }
     })
     .forEach(Query => {
