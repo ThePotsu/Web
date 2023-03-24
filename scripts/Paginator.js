@@ -41,7 +41,7 @@ export default async function FilterImageDatas (ImageDatas) {
 
     function GenURL (page)
     {
-	  if (/page=[0-9]+/.test(document.location.href)) return `${document.location.href}&page=${page}`;
+	  if (/page=[0-9]+/.test(document.location.href)) return `${document.location.href.replace(/\/$/, '')}?page=${page}`;
         return document.location.href.replace(/page=[0-9]+/, `page=${page}`);
     }
 }
