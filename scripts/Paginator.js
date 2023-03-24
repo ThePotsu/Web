@@ -2,8 +2,10 @@ const params    = new URLSearchParams(window.location.search);
 
 const DoujinsPerPage = 20;
 const RawPage   = Number(params.get("page")) || 1;
-const Pages     = Math.ceil(ImageDatas.length / DoujinsPerPage);
-const Page      = 
+
+export default async function FilterImageDatas (ImageDatas) {
+    const Pages     = Math.ceil(ImageDatas.length / DoujinsPerPage);
+    const Page      = 
     RawPage <= 0 ? 
         1 
         : 
@@ -12,7 +14,7 @@ const Page      =
             :
             RawPage;
 
-export default async function FilterImageDatas (ImageDatas) {
+            
     const ImageDatasToRender    = ImageDatas.filter((_, index) => (index >= ((RawPage - 1) * DoujinsPerPage)) && (index < (RawPage * DoujinsPerPage)));
 
 
