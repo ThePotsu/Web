@@ -20,7 +20,7 @@ const All_Tags = ImageDatas
     .map(Data => Data.tags)
     .flat();
 
-
+console.log(JSON.stringify(All_Tags, null, 2), All_Tags.filter(d => !d.tags))
 const matches = [];
 
 All_Tags
