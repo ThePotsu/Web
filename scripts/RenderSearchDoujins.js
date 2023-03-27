@@ -18,9 +18,9 @@ const q_sortby  = params.get("sortby") || "r1";
 
 const All_Tags = ImageDatas
     .map(Data => Data.tags)
-    .flat();
+    .flat()
+    .filter(d => d);
 
-console.log(JSON.stringify(All_Tags, null, 2), All_Tags.filter(d => !d))
 const matches = [];
 
 All_Tags
